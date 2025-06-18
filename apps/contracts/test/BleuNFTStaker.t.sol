@@ -2,7 +2,8 @@
 pragma solidity ^0.8.20;
 
 import {Test, console} from "forge-std/Test.sol";
-import {BleuNFT, BleuNFTStaker} from "../src/BleuNFTStaker.sol";
+import {BleuNFTStaker} from "../src/BleuNFTStaker.sol";
+import {BleuNFT} from "../src/BleuNFT.sol";
 
 contract BleuNFTStakerTest is Test {
     BleuNFTStaker public staker;

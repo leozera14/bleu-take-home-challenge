@@ -3,9 +3,11 @@ pragma solidity ^0.8.20;
 
 import {Script, console} from "forge-std/Script.sol";
 import {BleuNFT} from "../src/BleuNFT.sol";
+import {BleuNFTStaker} from "../src/BleuNFTStaker.sol";
 
-contract BleuNFTScript is Script {
+contract Deploy is Script {
     BleuNFT public nft;
+    BleuNFTStaker public staker;
 
     function setUp() public {}
 
@@ -13,7 +15,7 @@ contract BleuNFTScript is Script {
         vm.startBroadcast();
 
         nft = new BleuNFT();
-        nft.mint(msg.sender, 1);
+        staker = new BleuNFTStaker(address(nft));
 
         vm.stopBroadcast();
     }

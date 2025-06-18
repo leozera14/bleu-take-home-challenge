@@ -11,9 +11,10 @@ This directory contains the smart contract implementation for the Bleu NFT staki
 
 ## Contract Architecture
 
-The main contract `BleuNFT` inherits from OpenZeppelin's ERC721 and implements:
-
+The contract `BleuNFT` inherits from OpenZeppelin's ERC721 and can implement custom methods like:
 - `mint()`: Allows users to mint new NFTs
+
+The `BleuNFTStaker` is the main stacking logic to be implement. This contract should hold the `BleuNFT` tokens while they are active. This contract also inherits from OpenZeppelin's ERC721 to represent the staked position.
 - `stake()`: Enables NFT staking
 - `unstake()`: Allows withdrawal of staked NFTs
 

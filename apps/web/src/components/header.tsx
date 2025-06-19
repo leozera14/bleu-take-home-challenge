@@ -5,7 +5,6 @@ import { Moon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { ConnectWalletButton } from './connect-wallet-button';
-import NavLink from './nav-link';
 import { Button } from './ui/button';
 
 const Header = () => {
@@ -16,10 +15,7 @@ const Header = () => {
       <Link href="/">
         <h1 className="text-primary font-bold text-lg font-roboto-mono text-center">Bleu</h1>
       </Link>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4 text-lg">
-        <NavLink href="/">Home</NavLink>
-        <NavLink href="/theme-showcase">Theme Showcase</NavLink>
-      </div>
+      
       <div className="flex items-center gap-2">
         <ConnectWalletButton />
         <Button

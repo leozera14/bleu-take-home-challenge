@@ -1,7 +1,6 @@
 import { ponder } from 'ponder:registry';
 import schema from 'ponder:schema';
 
-console.log(Object.keys(schema))
 
 ponder.on('BleuNFT:Mint', async ({ event, context }) => {
   const { to, tokenId } = event.args

@@ -105,6 +105,40 @@ export const BleuNFTStakerAbi = [
     },
     {
       "type": "function",
+      "name": "onERC721Received",
+      "inputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
       "name": "ownerOf",
       "inputs": [
         {
@@ -196,11 +230,6 @@ export const BleuNFTStakerAbi = [
       "name": "stake",
       "inputs": [
         {
-          "name": "to",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
           "name": "tokenId",
           "type": "uint256",
           "internalType": "uint256"
@@ -208,6 +237,25 @@ export const BleuNFTStakerAbi = [
       ],
       "outputs": [],
       "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "stakerOf",
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
     },
     {
       "type": "function",
@@ -285,13 +333,21 @@ export const BleuNFTStakerAbi = [
     },
     {
       "type": "function",
+      "name": "underlyingNFT",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "contract ERC721"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
       "name": "unstake",
       "inputs": [
-        {
-          "name": "to",
-          "type": "address",
-          "internalType": "address"
-        },
         {
           "name": "tokenId",
           "type": "uint256",

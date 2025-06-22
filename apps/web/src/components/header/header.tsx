@@ -5,13 +5,13 @@ import { Moon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { ConnectWalletButton } from './connect-wallet-button';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 const Header = () => {
   const { toggleTheme } = useThemeStore();
 
   return (
-    <header className="flex relative h-16 items-center justify-between bg-content mx-5 mt-6 px-5 rounded-3xl ">
+    <header className="w-full flex relative h-16 items-center justify-between bg-content px-5 rounded-3xl">
       <Link href="/">
         <h1 className="text-primary font-bold text-lg font-roboto-mono text-center">Bleu</h1>
       </Link>

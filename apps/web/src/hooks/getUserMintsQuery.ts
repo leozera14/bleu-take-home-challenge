@@ -22,6 +22,8 @@ export function getUserMintsQuery(pollInterval = 5000) {
   });
 
   useEffect(() => {
+    if(!address) return
+
     const id = setInterval(() => {
       reexecute({requestPolicy: "cache-and-network"})
     }, pollInterval)

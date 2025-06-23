@@ -21,6 +21,12 @@ ponder.on('BleuNFTStaker:Stake', async ({ event, context }) => {
     staker: to,
     tokenId: tokenId,
   })
+
+  await context.db.delete(schema.bleuNFTCurrentStake, {tokenId});
+  
+  await context.db
+    .insert(schema.bleuNFTCurrentStake)
+    .values({ tokenId, staker: to });
 })
 
 ponder.on('BleuNFTStaker:Unstake', async ({ event, context }) => {
@@ -32,4 +38,6 @@ ponder.on('BleuNFTStaker:Unstake', async ({ event, context }) => {
     staker: to,
     tokenId: tokenId,
   })
+
+  await context.db.delete(schema.bleuNFTCurrentStake, {tokenId});
 })

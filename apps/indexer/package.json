@@ -2,7 +2,7 @@
   "name": "@bleu-builders/tech-challenge-indexer",
   "private": true,
   "scripts": {
-    "dev": "ponder dev",
+    "dev": "ponder dev -p 42069",
     "start": "ponder start",
     "check": "biome check --write .",
     "typecheck": "tsc --noEmit",

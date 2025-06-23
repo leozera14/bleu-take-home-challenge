@@ -1,5 +1,3 @@
 export * from "./getAllMintsQuery"
-export * from "./getAllQueries"
-export * from "./getAllStakesQuery"
-export * from "./getFilteredStakesQuery"
 export * from "./getUserMintsQuery"
+export * from "./getCurrentStakedQuery"

@@ -26,3 +26,8 @@ export const bleuNFTStakerUnstake = onchainTable(
     tokenId: t.bigint(),
   })
 );
+
+export const bleuNFTCurrentStake = onchainTable('bleu_nft_current_stake', t => ({
+  tokenId: t.bigint().primaryKey(),
+  staker:  t.hex(),
+}));

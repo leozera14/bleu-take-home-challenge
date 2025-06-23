@@ -3,9 +3,13 @@
 import { useEffect, useState } from 'react'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { Button } from '@/components/ui/button'
-import { IMintModalPros } from '@/types/MintModal'
 import { BleuNFTAbi } from '@/lib/abis/BleuNFTAbi'
 import { cn } from '@/lib/utils'
+
+interface IMintModalPros {
+  isOpen: boolean
+  onClose: () => void
+}
 
 export default function MintModal({
   isOpen, 
@@ -26,7 +30,7 @@ export default function MintModal({
   const handleMintNFT = async () => {
     try {
       await writeContractAsync({
-        address: process.env.NEXT_PUBLIC_NFT_CONTRACT! as `0x${string}`,
+        address: process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS! as `0x${string}`,
         abi: BleuNFTAbi,
         functionName: 'mint',
         args: [address!, BigInt(tokenId)], 
@@ -72,7 +76,7 @@ export default function MintModal({
           type="text"
           placeholder="42"
           className={cn(
-            "w-full rounded border px-3 py-2 bg-background text-foreground outline-none border-transparent",
+            "w-full rounded border px-3 py-2 bg-background text-foreground outline-none",
             errorMessage ? "mb-2" : "mb-4"
           )}
           value={tokenId}

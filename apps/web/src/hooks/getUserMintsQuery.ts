@@ -1,3 +1,4 @@
+import { IGetYourMintsResponse } from '@/types/IGetYourMints';
 import { useEffect } from 'react'
 import { gql, useQuery } from 'urql'
 import { useAccount } from 'wagmi'
@@ -21,7 +22,7 @@ const GET_YOUR_MINTS = gql`
 export function getUserMintsQuery(pollInterval = 5000) {
   const { address } = useAccount();
   
-  const [result, reexecute] = useQuery({ 
+  const [result, reexecute] = useQuery<IGetYourMintsResponse>({ 
     query: GET_YOUR_MINTS,
     variables: { who: address?.toLowerCase() ?? '' },
     pause: !address,

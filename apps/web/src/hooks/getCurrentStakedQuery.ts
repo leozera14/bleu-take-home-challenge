@@ -1,6 +1,7 @@
 import { useAccount } from 'wagmi';
 import { gql, useQuery } from 'urql';
 import { useEffect } from 'react';
+import { IGetCurrentStakesResponse } from '@/types/ICurrentStake';
 
 const GET_CURRENT_STAKES = gql`
   query GetCurrentStakes($who: String!) {
@@ -19,7 +20,7 @@ const GET_CURRENT_STAKES = gql`
 export function getCurrentStakedQuery(pollInterval = 5000) {
   const { address } = useAccount();
   
-  const [result, reexecute] = useQuery({
+  const [result, reexecute] = useQuery<IGetCurrentStakesResponse>({
     query: GET_CURRENT_STAKES,
     variables: { who: address?.toLowerCase() ?? '' },
     pause: !address,

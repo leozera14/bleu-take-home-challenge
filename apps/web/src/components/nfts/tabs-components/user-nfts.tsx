@@ -10,6 +10,7 @@ import { transition_colors } from '@/constant/transition-colors'
 import { useThemeStore } from '@/store/useThemeStore'
 import { formatNftTimestamp } from '@/utils/format-nft-timestamp'
 import { ComponentStateHandler } from '@/utils/component-state-handler'
+import { IGetYourMintsResponse } from '@/types/IGetYourMints'
 
 const UserNFTs: React.FC = () => {
   const {theme} = useThemeStore()
@@ -20,15 +21,13 @@ const UserNFTs: React.FC = () => {
   if (loadingMints || fetchingCurrentStaked) return <ComponentStateHandler loading='Loading your NFTs...'/>
   if (mintsError) return <ComponentStateHandler error='Error fetching your NFTs...'/>
 
-  const items = mintsData!.bleuNFTMints.items.sort((a: any, b: any) => b.createdAt - a.createdAt)
+  const items = mintsData!.bleuNFTMints?.items.sort((a, b) => b.createdAt - a.createdAt) || [] as IGetYourMintsResponse[]
 
   if(!items.length) return <ComponentStateHandler length='You have no NFTs minted yet...'/>
 
   return (
     <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {items.length === 0 && <li></li>}
-      
-      {items.map((nft: any) => {
+      {items.map((nft) => {
         const tokenId = Number(nft.tokenId)
         const isStaked = stakedSet.has(tokenId)
 

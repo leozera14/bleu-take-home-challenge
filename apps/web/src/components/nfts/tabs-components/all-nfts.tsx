@@ -11,6 +11,7 @@ import { transition_colors } from '@/constant/transition-colors'
 import { CopyAddressComponent } from '@/utils/copy-to-clipboard'
 import { formatNftTimestamp } from '@/utils/format-nft-timestamp'
 import { ComponentStateHandler } from '@/utils/component-state-handler'
+import { IGetMintsResponse } from '@/types/IMintRecord'
 
 const AllNfts: React.FC = () => {
   const { address } = useAccount()
@@ -22,7 +23,7 @@ const AllNfts: React.FC = () => {
   if (fetching || fetchingCurrentStaked) return <ComponentStateHandler loading='Loading NFTs...'/>
   if (error) return <ComponentStateHandler error='Error fetching NFTs...'/>
 
-  const items = data!.bleuNFTMints.items.sort((a: any, b: any) => b.createdAt - a.createdAt)
+  const items = data!.bleuNFTMints?.items.sort((a, b) => b.createdAt - a.createdAt) || [] as IGetMintsResponse[]
 
   if(!items.length) {
     return <ComponentStateHandler length='No NFTs minted yet...'/>
@@ -30,7 +31,7 @@ const AllNfts: React.FC = () => {
 
   return (
     <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {items.map((nft: any) => {
+      {items.map((nft) => {
         const tokenId = Number(nft.tokenId);
         const owned = address?.toLowerCase() === nft.to.toLowerCase();
         const isStaked = stakedSet.has(tokenId);

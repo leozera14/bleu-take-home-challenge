@@ -51,7 +51,9 @@ export default function Home() {
             onClick={() => setTab('all')}
             className={cn("cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12", 
               tabClass("all"),
-              transition_colors)}
+              transition_colors)
+            }
+            type="button"
           >
             All NFTs
           </button>
@@ -60,7 +62,9 @@ export default function Home() {
             disabled={disabledTabs}
             className={cn("cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12", 
               tabClass("user"),
-              transition_colors)}
+              transition_colors)
+            }
+            type="button"
           >
             Your NFTs
           </button>
@@ -69,7 +73,8 @@ export default function Home() {
             disabled={disabledTabs}
             className={cn("cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12", 
               tabClass("staked"),
-              transition_colors)}
+              transition_colors)
+            }
             type="button"
           >
             Staked NFTs

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import React from 'react';
 import { ConnectWalletButton } from './connect-wallet-button';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
+import { transition_colors } from '@/constant/transition-colors';
 
 const Header = () => {
   const { toggleTheme } = useThemeStore();
@@ -15,6 +17,26 @@ const Header = () => {
       <Link href="/">
         <h1 className="text-primary font-bold text-lg font-roboto-mono text-center">Bleu</h1>
       </Link>
+
+      <div className='flex items-center gap-x-6'>
+        <Link href="/">
+          <h1 className={cn(
+            "text-primary font-bold text-lg font-roboto-mono text-center hover:text-primary/80 hover:underline",
+            transition_colors
+          )}>
+            NFTs
+          </h1>
+        </Link>
+
+        <Link href="/transactions">
+          <h1 className={cn(
+            "text-primary font-bold text-lg font-roboto-mono text-center hover:text-primary/80 hover:underline",
+            transition_colors,
+          )}>
+            Transactions
+          </h1>
+        </Link>
+      </div>
       
       <div className="flex items-center gap-2">
         <ConnectWalletButton />

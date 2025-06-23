@@ -9,6 +9,7 @@ import { transition_colors } from '@/constant/transition-colors'
 import { useThemeStore } from '@/store/useThemeStore'
 import { formatNftTimestamp } from '@/utils/format-nft-timestamp'
 import { ComponentStateHandler } from '@/utils/component-state-handler'
+import { ICurrentStakeRecord } from '@/types/ICurrentStake'
 
 const StakedNFTs: React.FC = () => {
   const {theme} = useThemeStore()
@@ -21,13 +22,13 @@ const StakedNFTs: React.FC = () => {
   if (fetching) return <ComponentStateHandler loading='Loading your Staked NFTs...'/>
   if (error) return <ComponentStateHandler error='Error fetching your Staked NFTs...'/>
 
-  const items = data?.bleuNFTCurrentStakes.items.sort((a: any, b: any) => b.createdAt - a.createdAt)
+  const items = data?.bleuNFTCurrentStakes.items.sort((a, b) => b.createdAt - a.createdAt) || [] as ICurrentStakeRecord []
 
   if (items.length === 0) return <ComponentStateHandler length='You have no Staked NFTs...'/>
 
   return (
     <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {items.map((nft: any) => (
+      {items.map((nft) => (
         <li 
           key={nft.tokenId} 
           className={cn(

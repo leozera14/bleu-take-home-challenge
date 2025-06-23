@@ -4,8 +4,14 @@ import { useEffect } from 'react';
 
 const GET_CURRENT_STAKES = gql`
   query GetCurrentStakes($who: String!) {
-    bleuNFTCurrentStakes(where: { staker: $who }) {
-      items { tokenId }
+    bleuNFTCurrentStakes(
+      where: { staker: $who }
+    ) {
+      items {
+        tokenId
+        createdAt
+      }
+      totalCount
     }
   }
 `;

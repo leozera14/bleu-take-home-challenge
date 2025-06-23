@@ -3,7 +3,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { useTokenAction, TokenAction } from '@/hooks/useTokenAction'
-import { handleDynamicLabel } from '@/utils/handleDynamicLabel'
+import { handleDynamicLabel } from '@/utils/handle-dynamic-label'
 
 interface TokenActionButtonProps {
   tokenId: number
@@ -24,12 +24,13 @@ export function TokenActionButton({
   } = useTokenAction(tokenId, action)
 
   return (
-    <div>
+    <div className='w-full'>
       <Button
         size="sm"
-        variant="outline"
+        variant="default"
         onClick={handleAction}
         disabled={isBusy || isDone}
+        className='w-full'
       >
         {handleDynamicLabel({
           isBusy,

@@ -4,8 +4,15 @@ import { useAccount } from 'wagmi'
 
 const GET_YOUR_MINTS = gql`
   query GetYourMints($who: String!) {
-    bleuNFTMints(where: { to: $who }) {
-      items { id to tokenId }
+    bleuNFTMints(
+      where: { to: $who }
+    ) {
+      items {
+        id
+        to
+        tokenId
+        createdAt
+      }
       totalCount
     }
   }

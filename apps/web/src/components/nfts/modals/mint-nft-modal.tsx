@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useState } from 'react'
+import { useAccount, useWriteContract, usePublicClient } from 'wagmi'
 import { Button } from '@/components/ui/button'
 import { BleuNFTAbi } from '@/lib/abis/BleuNFTAbi'
 import { cn } from '@/lib/utils'
+import { toast } from 'react-toastify'
 
 interface IMintModalPros {
   isOpen: boolean
@@ -17,10 +18,13 @@ export default function MintModal({
 }: IMintModalPros) {
   const { address } = useAccount()
 
-  const {data: hash, isPending, isError, writeContractAsync} = useWriteContract()
+  const client = usePublicClient()
+
+  const {isPending, writeContractAsync} = useWriteContract()
 
   const [tokenId, setTokenId] = useState<string>('')
-  const [errorMessage, setErrorMessage] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isDone, setIsDone] = useState<boolean>(false)
 
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,31 +33,35 @@ export default function MintModal({
 
   const handleMintNFT = async () => {
     try {
-      await writeContractAsync({
+      setIsLoading(true)
+
+      const mintHash = await writeContractAsync({
         address: process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS! as `0x${string}`,
         abi: BleuNFTAbi,
         functionName: 'mint',
         args: [address!, BigInt(tokenId)], 
       })
+
+      await client?.waitForTransactionReceipt({ hash: mintHash })
+
+      setIsDone(true)
+
+      toast.success("NFT successfully minted!")
+
+      setTokenId("")
+      
+      onClose()
     } catch (error: any) {
       if(error?.message?.includes("User rejected the request")) {
-        setErrorMessage("User rejected the transaction!")
+        toast.error("User rejected the transaction!")
+      } else {
+        toast.error("Error trying to Mint NFT...")
       }
+    } finally {
+      setIsDone(false)
+      setIsLoading(false)
     }
   }
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    })
-  
-  useEffect(() => {
-    if(isConfirmed) {
-      setTokenId("")
-      setErrorMessage("")
-      onClose()
-    }
-  },[isConfirmed])
 
   if (!isOpen) return null
 
@@ -77,33 +85,26 @@ export default function MintModal({
           placeholder="42"
           className={cn(
             "w-full rounded border px-3 py-2 bg-background text-foreground outline-none",
-            errorMessage ? "mb-2" : "mb-4"
           )}
           value={tokenId}
           onChange={onChange}
         />
 
-
-        {isError && errorMessage && (
-          <p className="text-error text-sm mb-4">
-            {errorMessage}
-          </p>
-        )}
-
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
           <Button
             variant="default"
-            disabled={!tokenId || isPending || isConfirming}
+            disabled={!tokenId || isPending || isLoading}
             onClick={() => handleMintNFT?.()}
           >
-            {isPending || isConfirming
-              ? 'Minting…'
-              : isConfirmed
+            {
+             isPending || isLoading ? 'Minting…' 
+              : isDone
                 ? 'Minted ✓'
-                : 'Confirm'}
+                : 'Confirm'
+            }
           </Button>
         </div>
 

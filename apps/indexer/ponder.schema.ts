@@ -3,9 +3,10 @@ import { onchainTable } from 'ponder';
 export const bleuNFTMint = onchainTable(
  'bleu_nft_mint',
   (t) => ({
-    id: t.text().primaryKey(),       
-    to: t.hex(),                 
-    tokenId: t.bigint(),             
+    id: t.text().primaryKey(),
+    to: t.hex(),
+    tokenId: t.bigint(),
+    createdAt: t.bigint(),
   })
 );
 
@@ -15,6 +16,7 @@ export const bleuNFTStakerStake = onchainTable(
     id: t.text().primaryKey(),
     staker: t.hex(),
     tokenId: t.bigint(),
+    createdAt: t.bigint(),
   })
 );
 
@@ -24,10 +26,12 @@ export const bleuNFTStakerUnstake = onchainTable(
     id: t.text().primaryKey(),
     staker: t.hex(),
     tokenId: t.bigint(),
+    createdAt: t.bigint(),
   })
 );
 
 export const bleuNFTCurrentStake = onchainTable('bleu_nft_current_stake', t => ({
   tokenId: t.bigint().primaryKey(),
   staker:  t.hex(),
+  createdAt: t.bigint(),
 }));

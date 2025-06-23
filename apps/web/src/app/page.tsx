@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { transition_colors } from "@/constant/transition-colors";
 import MintModal from "@/components/nfts/modals/mint-nft-modal";
 import { useThemeStore } from "@/store/useThemeStore";
+import { ToastContainer } from "react-toastify";
 
 type Tab = 'user' | 'all' | 'staked'
 
@@ -95,6 +96,8 @@ export default function Home() {
           setIsOpenModal(false)
         }} 
       />
+
+      <ToastContainer theme={theme}/>
     </div>
   );
 }

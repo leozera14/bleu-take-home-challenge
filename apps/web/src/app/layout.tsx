@@ -22,7 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(rubik.className, 'bg-background text-foreground px-2 md:px-5')}>
+      <body 
+        className={cn(rubik.className, 'bg-background text-foreground px-2 md:px-5 min-h-[100dvh]')}
+        style={{
+          minWidth: "100lvw",
+        }}
+      >
         <Providers>
           <div className='flex items-center py-6 w-full'>
             <Header />

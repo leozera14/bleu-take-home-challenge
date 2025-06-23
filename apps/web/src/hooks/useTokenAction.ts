@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useWriteContract, usePublicClient } from 'wagmi'
 import { BleuNFTStakerAbi } from '@/lib/abis/BleuNFTStakerAbi'
 import { BleuNFTAbi } from '@/lib/abis/BleuNFTAbi'
+import { toast } from 'react-toastify'
 
 export type TokenAction = 'stake' | 'unstake'
 export type ActionStep = 'idle' | 'approving' | 'acting'
@@ -33,6 +34,8 @@ export function useTokenAction(tokenId: number, action: TokenAction) {
         })
 
         await client?.waitForTransactionReceipt({ hash: approveHash })
+
+        toast.success("Successfully approved!")
       }
 
       setCurrentStep("acting")
@@ -46,11 +49,14 @@ export function useTokenAction(tokenId: number, action: TokenAction) {
 
       await client?.waitForTransactionReceipt({hash: actionHash})
 
+      toast.success(`Successfully ${action}d!`)
+
       setIsDone(true)
     } catch (err: any) {
       setErrorMessage(err.message.includes('User rejected') 
         ? 'User rejected the transaction.' 
         : `Error trying to ${action}...`)
+      toast.error(errorMessage)
       setCurrentStep("idle")
     }
   }

@@ -8,6 +8,7 @@ const GET_MINTS = gql `
         id
         to
         tokenId
+        createdAt
       }
       totalCount
     }

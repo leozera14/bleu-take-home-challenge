@@ -18,93 +18,57 @@ The `BleuNFTStaker` is the main stacking logic to be implement. This contract sh
 - `stake()`: Enables NFT staking
 - `unstake()`: Allows withdrawal of staked NFTs
 
-## Development Tools
+## How to run
 
-This project uses Foundry for development and testing:
-
-- **Forge**: Testing framework
-- **Cast**: Contract interaction tool
-- **Anvil**: Local Ethereum node
-- **Chisel**: Solidity REPL
-
-## Getting Started
-
-1. Install Foundry:
+1. Install Foundry into your machine running this command on your terminal:
 
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
 ```
 
-2. Install dependencies:
+2. Later that foundry is installed, access the contracts founder and install the dependencies:
 
 ```bash
+# Access the folder
+cd contracts/
+
+# Install the dependencies
 forge install
-```
 
-3. Build the contracts:
-
-```bash
+# Build the contracts
 forge build
-```
 
-4. Run tests:
-
-```bash
+# Test the contracts functions to ensure everything is ok
 forge test
 ```
+
+3. With that you should got in your terminal messages of success on the tests. So we can move to the next step which is create a .env file into the source of **contracts/** folder.
+```bash
+# Create .env file
+touch .env
+
+# .env file example:
+PRIVATE_KEY=your wallet_private_key_here
+RPC_URL=https://sepolia.infura.io/v3/your_infura_key_here
+```
+
+4. In the next links you can know how to get your Wallet Private Key and also your Infura Key to run deploy the contracts:
+[**How to get Private Key - Metamask example**](https://support.metamask.io/configure/accounts/how-to-export-an-accounts-private-key/)
+[**How to get Infura Key**](https://docs.metamask.io/services/get-started/infura/#:~:text=Infura%20automatically%20generates%20the%20My,can%20view%20your%20API%20key)
+
+5. With your keys in hand, just fill the .env file envs so we can proceed for the next step which is deploy the contract at the Sepolia Testnet. Ensure that you have balance into it, as it is necessary to deploy the contracts.
 
 ## Deployment
 
 To deploy to a testnet (e.g., Sepolia):
 
 ```bash
-forge script script/BleuNFT.s.sol:BleuNFTScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+# Expose your .env values first by the following command into your terminal:
+export $(grep -v '^#' .env | xargs)
+
+# Run the command that will deploy both contracts:
+pnpm deploy:testnet
 ```
 
-## Contract Verification
-
-After deployment, verify your contract:
-
-```bash
-forge verify-contract <deployed-address> src/BleuNFT.sol:BleuNFT --chain sepolia
-```
-
-## Testing
-
-Run the test suite:
-
-```bash
-forge test
-```
-
-Generate gas snapshots:
-
-```bash
-forge snapshot
-```
-
-## Local Development
-
-Start a local node:
-
-```bash
-anvil
-```
-
-## Contract Interaction
-
-Use Cast to interact with deployed contracts:
-
-```bash
-# Mint an NFT
-cast send --rpc-url <rpc_url> --private-key <private_key> <contract_address> "mint()"
-
-# Stake an NFT
-cast send --rpc-url <rpc_url> --private-key <private_key> <contract_address> "stake(uint256)" <token_id>
-```
-
-## Additional Resources
-
-- [Foundry Book](https://book.getfoundry.sh/)
-- [OpenZeppelin Docs](https://docs.openzeppelin.com/)
+1. When the deploy was succed, in your terminal you gonna see both Contracts Address, keep it saved because we gonna use it into Indexer and Web envs. Also, in the **contracts/** folder you may also see a folder called **out/**, inside of this folder we have **out/BleuNFT.sol/BleuNFT.json** and **out/BleuNFTStaker.sol/BleuNFTStaker.json** which is your Contracts ABI, we gonna also use this later in the next steps, you can proceed to Indexer folder right now.

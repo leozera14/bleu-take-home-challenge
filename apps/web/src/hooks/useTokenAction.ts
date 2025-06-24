@@ -51,6 +51,12 @@ export function useTokenAction(tokenId: number, action: TokenAction) {
       toast.success(`Successfully ${action}d!`);
 
       setIsDone(true);
+
+      setTimeout(() => {
+        setIsDone(false);
+        setCurrentStep('idle');
+        setErrorMessage('');
+      }, 1500);
     } catch (err) {
       let message = 'Unknown error';
 

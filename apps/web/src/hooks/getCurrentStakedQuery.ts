@@ -1,7 +1,7 @@
-import { useAccount } from 'wagmi';
-import { gql, useQuery } from 'urql';
+import type { IGetCurrentStakesResponse } from '@/types/ICurrentStake';
 import { useEffect } from 'react';
-import { IGetCurrentStakesResponse } from '@/types/ICurrentStake';
+import { gql, useQuery } from 'urql';
+import { useAccount } from 'wagmi';
 
 const GET_CURRENT_STAKES = gql`
   query GetCurrentStakes($who: String!) {
@@ -19,7 +19,7 @@ const GET_CURRENT_STAKES = gql`
 
 export function getCurrentStakedQuery(pollInterval = 5000) {
   const { address } = useAccount();
-  
+
   const [result, reexecute] = useQuery<IGetCurrentStakesResponse>({
     query: GET_CURRENT_STAKES,
     variables: { who: address?.toLowerCase() ?? '' },
@@ -37,14 +37,14 @@ export function getCurrentStakedQuery(pollInterval = 5000) {
   }, [address, pollInterval, reexecute]);
 
   const stakedSet = new Set<number>(
-    result.data?.bleuNFTCurrentStakes.items.map((i: any) => Number(i.tokenId)) || []
+    result.data?.bleuNFTCurrentStakes.items.map((i) => Number(i.tokenId)) || []
   );
 
-  return { 
+  return {
     data: result.data,
     fetching: result.fetching,
-    error: result.error, 
+    error: result.error,
     stakedSet,
-    refetchCurrentStaked:() => reexecute({requestPolicy: "cache-and-network"})
+    refetchCurrentStaked: () => reexecute({ requestPolicy: 'cache-and-network' }),
   };
 }

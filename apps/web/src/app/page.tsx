@@ -1,38 +1,38 @@
-"use client"
-import React, { useEffect, useMemo, useState } from "react";
-import { useAccount } from "wagmi";
+'use client';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useAccount } from 'wagmi';
 
-import { Button } from "@/components/ui/button";
-import UserNFTs from "@/components/nfts/tabs-components/user-nfts";
-import AllNFTs from "@/components/nfts/tabs-components/all-nfts";
-import StakedNFTs from "@/components/nfts/tabs-components/staked-nfts";
-import { cn } from "@/lib/utils";
-import { transition_colors } from "@/constant/transition-colors";
-import MintModal from "@/components/nfts/modals/mint-nft-modal";
-import { useThemeStore } from "@/store/useThemeStore";
-import { ToastContainer } from "react-toastify";
+import MintModal from '@/components/nfts/modals/mint-nft-modal';
+import AllNFTs from '@/components/nfts/tabs-components/all-nfts';
+import StakedNFTs from '@/components/nfts/tabs-components/staked-nfts';
+import UserNFTs from '@/components/nfts/tabs-components/user-nfts';
+import { Button } from '@/components/ui/button';
+import { transition_colors } from '@/constant/transition-colors';
+import { cn } from '@/lib/utils';
+import { useThemeStore } from '@/store/useThemeStore';
+import { ToastContainer } from 'react-toastify';
 
-type Tab = 'user' | 'all' | 'staked'
+type Tab = 'user' | 'all' | 'staked';
 
 export default function Home() {
-  const {theme} = useThemeStore()
+  const { theme } = useThemeStore();
 
-  const {address} = useAccount()
-  
-  const [tab, setTab] = useState<Tab>("all")
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const { address } = useAccount();
 
-  const activeTab = address ? tab : "all"
+  const [tab, setTab] = useState<Tab>('all');
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
-  const disabledTabs = !address
+  const activeTab = address ? tab : 'all';
+
+  const disabledTabs = !address;
 
   const ComponentToShow = useMemo(() => {
     return {
       user: UserNFTs,
       all: AllNFTs,
       staked: StakedNFTs,
-    }[activeTab]
-  }, [activeTab])
+    }[activeTab];
+  }, [activeTab]);
 
   useEffect(() => {
     if (!address) {
@@ -40,19 +40,22 @@ export default function Home() {
     }
   }, [address]);
 
-  const tabClass = (tabName: Tab) => tabName === tab
-    ? "border-primary" : `${theme === "dark" ? "border-content": "border-black/20"}`
+  const tabClass = (tabName: Tab) =>
+    tabName === tab
+      ? 'border-primary'
+      : `${theme === 'dark' ? 'border-content' : 'border-black/20'}`;
 
   return (
-   <div className="flex flex-col gap-y-6">
+    <div className="flex flex-col gap-y-6">
       <div className="flex flex-col md:flex-row items-start md:items-center">
         <nav className="w-full flex-1 flex flex-wrap justify-center space-x-2 mb-4 md:mb-0">
           <button
             onClick={() => setTab('all')}
-            className={cn("cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12", 
-              tabClass("all"),
-              transition_colors)
-            }
+            className={cn(
+              'cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12',
+              tabClass('all'),
+              transition_colors
+            )}
             type="button"
           >
             All NFTs
@@ -60,10 +63,11 @@ export default function Home() {
           <button
             onClick={() => setTab('user')}
             disabled={disabledTabs}
-            className={cn("cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12", 
-              tabClass("user"),
-              transition_colors)
-            }
+            className={cn(
+              'cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12',
+              tabClass('user'),
+              transition_colors
+            )}
             type="button"
           >
             Your NFTs
@@ -71,10 +75,11 @@ export default function Home() {
           <button
             onClick={() => setTab('staked')}
             disabled={disabledTabs}
-            className={cn("cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12", 
-              tabClass("staked"),
-              transition_colors)
-            }
+            className={cn(
+              'cursor-pointer disabled:cursor-not-allowed border-b-2 disabled:opacity-70 pb-0.5 px-8 md:px-12',
+              tabClass('staked'),
+              transition_colors
+            )}
             type="button"
           >
             Staked NFTs
@@ -95,14 +100,14 @@ export default function Home() {
 
       <ComponentToShow />
 
-      <MintModal 
-        isOpen={isOpenModal} 
+      <MintModal
+        isOpen={isOpenModal}
         onClose={() => {
-          setIsOpenModal(false)
-        }} 
+          setIsOpenModal(false);
+        }}
       />
 
-      <ToastContainer theme={theme}/>
+      <ToastContainer theme={theme} />
     </div>
   );
 }

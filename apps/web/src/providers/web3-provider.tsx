@@ -6,17 +6,14 @@ import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import type { ReactNode } from 'react';
 import { Provider } from 'urql';
 import { http, WagmiProvider, createConfig } from 'wagmi';
-import {  sepolia } from 'wagmi/chains';
+import { sepolia } from 'wagmi/chains';
 
 const walletConnectProjectId = '';
 
 const config = createConfig(
   getDefaultConfig({
-    chains: [
-      sepolia,
-    ],
+    chains: [sepolia],
     transports: {
-
       [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL ?? ''),
     },
     // Required API Keys

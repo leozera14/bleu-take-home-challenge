@@ -1,8 +1,8 @@
-import { IGetMintsResponse } from "@/types/IMintRecord";
-import { useEffect } from "react";
-import {gql, useQuery} from "urql"
+import type { IGetMintsResponse } from '@/types/IMintRecord';
+import { useEffect } from 'react';
+import { gql, useQuery } from 'urql';
 
-const GET_MINTS = gql `
+const GET_MINTS = gql`
   query GetMints {
     bleuNFTMints {
       items {
@@ -14,26 +14,26 @@ const GET_MINTS = gql `
       totalCount
     }
   }
-`
+`;
 
 export function getAllMintsQuery(pollInterval = 5000) {
-  const [result, reexecute] = useQuery<IGetMintsResponse>({ 
+  const [result, reexecute] = useQuery<IGetMintsResponse>({
     query: GET_MINTS,
     requestPolicy: 'cache-and-network',
   });
 
   useEffect(() => {
     const id = setInterval(() => {
-      reexecute({requestPolicy: "cache-and-network"})
-    }, pollInterval)
+      reexecute({ requestPolicy: 'cache-and-network' });
+    }, pollInterval);
 
-    return () => clearInterval(id)
-  }, [reexecute, pollInterval])
+    return () => clearInterval(id);
+  }, [reexecute, pollInterval]);
 
   return {
     data: result.data,
     fetching: result.fetching,
     error: result.error,
-    refetchAllNfts: () => reexecute({requestPolicy: "cache-and-network"})
-  }
+    refetchAllNfts: () => reexecute({ requestPolicy: 'cache-and-network' }),
+  };
 }

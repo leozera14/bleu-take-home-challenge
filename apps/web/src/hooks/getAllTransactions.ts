@@ -1,6 +1,6 @@
-import { IGetTransactionsQuery } from '@/types/IGetAllTransactions';
+import type { IGetTransactionsQuery } from '@/types/IGetAllTransactions';
 import { useEffect } from 'react';
-import { gql, useQuery } from 'urql'
+import { gql, useQuery } from 'urql';
 
 const GET_TRANSACTIONS = gql`
   query GetTransactions {
@@ -14,13 +14,13 @@ const GET_TRANSACTIONS = gql`
       items { id staker tokenId createdAt }
     }
   }
-`
+`;
 
 export function getAllTransactions(pollInterval = 5000) {
   const [result, reexecute] = useQuery<IGetTransactionsQuery>({
     query: GET_TRANSACTIONS,
-    requestPolicy: 'cache-and-network'
-  })
+    requestPolicy: 'cache-and-network',
+  });
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -32,7 +32,7 @@ export function getAllTransactions(pollInterval = 5000) {
   return {
     data: result.data,
     fetching: result.fetching,
-    error: result.error, 
-    refetchAllTransactions:() => reexecute({requestPolicy: "cache-and-network"})
-  }
+    error: result.error,
+    refetchAllTransactions: () => reexecute({ requestPolicy: 'cache-and-network' }),
+  };
 }

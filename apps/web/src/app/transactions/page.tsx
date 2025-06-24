@@ -1,28 +1,27 @@
-"use client"
+'use client';
 
-import { getAllTransactions } from "@/hooks/index";
-import { ComponentStateHandler } from "@/utils/component-state-handler";
-import { formatNftTimestamp } from "@/utils/format-nft-timestamp";
-import { useMemo } from "react";
+import { getAllTransactions } from '@/hooks/index';
+import { ComponentStateHandler } from '@/utils/component-state-handler';
+import { formatNftTimestamp } from '@/utils/format-nft-timestamp';
+import { useMemo } from 'react';
 
 export default function Transactions() {
-  const {data, error, fetching} = getAllTransactions()
+  const { data, error, fetching } = getAllTransactions();
 
   const rows = useMemo(() => {
-    if (!data) return []
+    if (!data) return [];
     return [
-      ...data.mints.items.map(r => ({ ...r, type: 'Mint' as const, user: r.to })),
-      ...data.stakes.items.map(r => ({ ...r, type: 'Stake' as const, user: r.staker })),
-      ...data.unstakes.items.map(r => ({ ...r, type: 'Unstake' as const, user: r.staker })),
-    ]
-    .sort((a, b) => b.createdAt - a.createdAt)
-  }, [data])
+      ...data.mints.items.map((r) => ({ ...r, type: 'Mint' as const, user: r.to })),
+      ...data.stakes.items.map((r) => ({ ...r, type: 'Stake' as const, user: r.staker })),
+      ...data.unstakes.items.map((r) => ({ ...r, type: 'Unstake' as const, user: r.staker })),
+    ].sort((a, b) => b.createdAt - a.createdAt);
+  }, [data]);
 
-  if(fetching) return <ComponentStateHandler loading="Loading all transactions..."/>
-  
-  if(error)return <ComponentStateHandler error="Error fetching all transactions..."/>
+  if (fetching) return <ComponentStateHandler loading="Loading all transactions..." />;
 
-  if(rows.length === 0) return <ComponentStateHandler length="No transactions to show..."/>
+  if (error) return <ComponentStateHandler error="Error fetching all transactions..." />;
+
+  if (rows.length === 0) return <ComponentStateHandler length="No transactions to show..." />;
 
   return (
     <div className="flex flex-col gap-y-6">
@@ -37,15 +36,13 @@ export default function Transactions() {
                 {tx.type} #{tx.tokenId}
               </p>
               <p className="text-sm text-muted">
-                by {tx.user.slice(0,12)}…{tx.user.slice(-8)}
+                by {tx.user.slice(0, 12)}…{tx.user.slice(-8)}
               </p>
             </div>
-            <div className="text-sm text-sub-text">
-              {formatNftTimestamp(Number(tx.createdAt))}
-            </div>
+            <div className="text-sm text-sub-text">{formatNftTimestamp(Number(tx.createdAt))}</div>
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
